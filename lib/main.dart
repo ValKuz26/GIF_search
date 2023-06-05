@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:gif_search_app/secondpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,9 +41,20 @@ class _GiphySearchPageState extends State<GiphySearchPage> {
       await Share.shareWithResult(gifUrl);
     }
 
+    void _openFullScreen(String gifUrl) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FullScreenGifPage(gifUrl: gifUrl)),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
+      child: InkWell(
+        onTap:() {
+      _openFullScreen(imageUrl);
+        },
+       child: Column(
           children:[
             Image.network(imageUrl, fit: BoxFit.cover),
             Row(
@@ -59,6 +71,7 @@ class _GiphySearchPageState extends State<GiphySearchPage> {
                 ]
             ),
           ]
+       ),
       ),
     );
   }
